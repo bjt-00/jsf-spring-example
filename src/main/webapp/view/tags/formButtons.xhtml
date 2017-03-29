@@ -1,0 +1,12 @@
+  <ui:composition   
+xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	   >
+			<h:commandLink 	 action="#{bean.performAction(bean,action.cancel,bean.model)}"          value="#{sid['label.cancel']}"  							   styleClass="btn btn-default" immediate="true"/>
+			<h:commandButton action="#{bean.performAction(bean,action.save,bean.model)}"            value="#{sid['label.submit']}" rendered="#{bean.saveAction}"   styleClass="btn btn-default"/>
+			<h:commandButton action="#{bean.performAction(bean,action.update,bean.model)}"          value="#{sid['label.update']}" rendered="#{bean.editAction}"   styleClass="btn btn-default"/>
+			<h:commandButton action="#{bean.performAction(bean,action.deleteConfirmed,bean.model)}" value="#{sid['label.delete']}" rendered="#{bean.deleteAction}" styleClass="btn btn-default" immediate="true"/>
+		
+</ui:composition>
+  

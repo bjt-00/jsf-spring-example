@@ -1,0 +1,14 @@
+  <ui:composition   
+xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	   >
+			<h:commandLink value="" action="#{bean.performAction(bean,action.delete,model)}" rendered="#{bean.deleteAction}" title="Delete" >
+			<span class="glyphicon glyphicon-trash"/>
+			</h:commandLink>
+			<h:commandLink value="" action="#{bean.performAction(bean,action.edit,model)}" rendered="#{bean.editAction}" title="Edit" >
+			<span class="glyphicon glyphicon-pencil"/>
+			</h:commandLink>
+		
+</ui:composition>
+  

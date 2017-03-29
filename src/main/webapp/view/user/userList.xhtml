@@ -1,0 +1,43 @@
+<ui:composition  template="/view/templates/defaultTemplate.xhtml" 
+xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:f="http://java.sun.com/jsf/core" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	  xmlns:bt="http://bitguiders.com/jsf/tags"
+	  xmlns:bc="http://java.sun.com/jsf/composite/components"
+	   >
+	<ui:define name="pageTitle">Users List</ui:define>
+	<ui:define name="contents">
+
+	<h:dataTable id="usersList" value="#{userBean.list}" var="user" styleClass="table table-striped" >
+		<f:facet name="caption"> 
+					<!-- search component -->
+					<bc:searchComponent defaultText="Enter Book Title" bean="#{userBean}"/>
+					<bt:listButtons bean="#{userBean}"/>
+		</f:facet>
+		<h:column>
+		    <f:facet name="header">Name</f:facet>
+			<bc:icon image="#{user.id}" styleClass="Icon" doValidation="false" actionMethod="#{userBean.action}" />
+			 <h:outputText value="#{user.name}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Date Of Birth</f:facet>
+			<h:outputText value="#{user.dateOfBirth}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">SSN</f:facet>
+			<h:outputText value="#{user.ssn}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Role</f:facet>
+			<h:outputText value="#{user.role}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Action</f:facet>
+			<bt:listActions bean="#{userBean}" model="#{user}"/>
+		</h:column>
+	</h:dataTable>
+		
+	</ui:define>
+</ui:composition>

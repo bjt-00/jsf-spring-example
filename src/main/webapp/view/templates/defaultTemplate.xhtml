@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:f="http://java.sun.com/jsf/core" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	  xmlns:bt="http://bitguiders.com/jsf/tags"
+	  >
+<h:head>
+<f:phaseListener type="com.bitguiders.jsf.JSFPhaseListener"/>
+<ui:remove>CTRL+SHIF+D could use to see debug report</ui:remove>
+<ui:debug/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title><ui:insert name="pageTitle"/></title>
+<ui:include src="../structure/imports.xhtml"/> 
+</h:head>
+<h:body>
+<div class="container">
+<!-- page title -->
+<h1><ui:insert name="pageTitle"/></h1>
+
+<!-- messages -->
+<bt:alert message="${flash.message}" messageType="${flash.messageType}" />
+<h:form id="form">
+<h:graphicImage id="loading" url="resources/themes/default/images/loading.gif" styleClass="Icon Loading" />
+
+<!-- page contents -->
+<ui:insert name="contents" />
+</h:form>	
+
+</div>
+</h:body>
+</html>

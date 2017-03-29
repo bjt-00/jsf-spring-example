@@ -1,0 +1,66 @@
+<ui:composition  template="/view/templates/defaultTemplate.xhtml" 
+xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:f="http://java.sun.com/jsf/core" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	  xmlns:bt="http://bitguiders.com/jsf/tags"
+	   >
+	<ui:define name="pageTitle">
+	#{userBean.pageTitle} #{userBean.model.name}
+	</ui:define>
+	<ui:define name="contents">
+		<div class="form-group">
+			<label for="user">${sid['label.userName']}</label>
+			<h:inputText  value="#{userBean.model.name}" valueChangeListener="#{userBean.nameChangeListener}"   autocomplete="false"   p:label=":" id="user" p:placeholder="Enter User Name"  required="true" class="form-control">
+				<f:ajax event="blur" execute="@this" listener="#{userBean.ajaxListener}" render="message" onevent="showLoading" onerror="showError"/>
+			</h:inputText>
+			<h:message for="user"/>
+			<h:outputText id="message" value="${userBean.message}" />
+			
+		</div>
+		<div class="form-group">
+			<label for="user">#{sid['label.password']}</label>
+			<input type="text" jsfc="h:inputText"  value="#{userBean.model.password}"  id="pwd" styleClass="form-control" />
+		</div>
+		<div class="form-group">
+			<label for="user">#{sid['label.dateOfBirth']}</label>
+			<h:inputText id="dateOfBirth" value="#{userBean.model.dateOfBirth}"  
+			p:type="date" 
+				p:placeholder="D-M-YYYY"  
+					styleClass="form-control" 
+					converterMessage="Not a valid date"
+					immediate="true"
+					 >
+				<f:convertDateTime pattern="d-M-yyyy" />
+				<!-- f:converter converterId="javax.faces.DateTime"/-->
+				<f:ajax event="blur" execute="@this" render="message" />
+			</h:inputText>
+			<h:message for="dateOfBirth"/>
+		</div>
+		<div class="form-group">
+			<label for="user">#{sid['label.SSN']}</label>
+			<h:inputText value="#{userBean.model.ssn}" id="SSN" validator="#{userBean.ssnValidator}"  p:placeholder="000-00-0000" styleClass="form-control">
+				<f:validateLength minimum="9" maximum="11" />
+				<!-- f:validateRegex pattern="(([0-9]{3})/[a-z]{3})" /-->
+			</h:inputText>
+			<h:message for="SSN" styleClass="alert-danger" />
+		</div>
+		<div class="form-group">
+			<label for="role">#{sid['label.role']}</label>
+			<h:selectOneMenu styleClass="form-control"  immediate="true" onchange="submit()"
+				value="#{userBean.model.role}"
+				valueChangeListener="#{userBean.roleChanged}"
+			  >
+				<f:selectItem itemLabel="Admin" itemValue="Admin"  />
+				<f:selectItem itemLabel="User" itemValue="User"  />
+				<f:selectItem itemLabel="Guest" itemValue="Guest"  />
+			</h:selectOneMenu>
+		</div>
+		<div class="form-group">
+			<bt:formButtons bean="#{userBean}" />
+		</div>
+		<div class="form-group">
+		</div>
+</ui:define>
+</ui:composition>
