@@ -39,8 +39,10 @@ private static final Logger logger = Logger.getLogger(UserBackingBean.class);
 	
 	public void delete(){
 		
-		client.delete(getModel());
-		setMessage(getModel().getName()+" "+getModel().getRole()+" is deleted successfully");
+		if(client.delete(getModel())){
+			setMessage(getModel().getName()+" "+getModel().getRole()+" is deleted successfully");
+		};
+		
 	}
 	 public void update(){
 		 client.update(getModel());

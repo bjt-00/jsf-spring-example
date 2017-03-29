@@ -35,26 +35,28 @@ public class UserClient {
 	client.close();
 	}
 	
-	public String createCustomer(User user) {
+	public boolean add(User user) {
+		boolean status=false;
 		if (user == null) {
-		logger.log(Level.WARN, "customer is null.");
-		return "userForm";
+		logger.log(Level.WARN, "User is null.");
+		return status;
 		}
-		String navigation;
+		
 		Response response =
-		client.target(REST_HOST+"user/create")
-		.request(MediaType.APPLICATION_XML)
-		.post(Entity.entity(user, MediaType.APPLICATION_XML),
+		client.target(REST_HOST)
+		.path("user/add.do")
+		.request(MediaType.APPLICATION_JSON)
+		.post(Entity.entity(user, MediaType.APPLICATION_JSON),
 		Response.class);
 		if (response.getStatus() == Status.CREATED.getStatusCode()) {
-		navigation = "userList";
+		status = true;
 		} else {
-		logger.log(Level.WARN, "couldn''t create customer with ");// +
+		logger.log(Level.WARN, "couldn''t create User with ");// +
 		//"id {0}. Status returned was {1}",
 		//new Object[]{user.getId(), response.getStatus()});
-		navigation = "userForm";
+		status = false;
 		}
-		return navigation;
+		return status;
 		}
 
 
@@ -68,17 +70,37 @@ public class UserClient {
 		return user;
 		}
 
-public void add(User orm) {
-	// TODO Auto-generated method stub
+		
+	public boolean update(User user) {
+		logger.info("------Updating user "+user.getName());
+		boolean status=false;
+		if (user == null) {
+		logger.log(Level.WARN, "User is null.");
+		return status;
+		}
+		
+		status =
+		client.target(REST_HOST)
+		.path("user/update.do")
+		.request(MediaType.APPLICATION_JSON)
+		.post(Entity.entity(user, MediaType.APPLICATION_JSON),
+		Boolean.class);
+		if (!status) {
+		logger.log(Level.WARN, "couldn''t update User with ");// +
+		//"id {0}. Status returned was {1}",
+		//new Object[]{user.getId(), response.getStatus()});
+		status = false;
+		}
+		return status;
+		}
+public boolean delete(User orm) {
+	boolean response =
+	client.target(REST_HOST)
+	.path("user/delete/"+orm.getId()+".do")
+	.request(MediaType.APPLICATION_JSON)
+	.get(Boolean.class);
 	
-}
-public void update(User orm) {
-	// TODO Auto-generated method stub
-	
-}
-public void delete(User orm) {
-	// TODO Auto-generated method stub
-	
+	return response;
 }
 /*	public String getJSONList() {
 
