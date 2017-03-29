@@ -2,9 +2,13 @@ package com.bitguiders.service.rest;
 
 import java.util.List;
 
+import javax.ws.rs.core.MediaType;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +20,8 @@ import com.bitguiders.service.user.UserService;
 @Controller
 @RequestMapping(value="/user")
 public class UserRest {
-	
+	private static final Logger logger =Logger.getLogger(UserRest.class.getName());
+
 	@Autowired
 	UserService service;
 	
@@ -28,6 +33,22 @@ public class UserRest {
 	@RequestMapping(value="/get/{id}", method=RequestMethod.GET ,produces="application/json")
 	public @ResponseBody User getById(@PathVariable(value="id", required=true) int id){
 		return service.getById(id);
+	}
+	@RequestMapping(value="/add", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON)
+	public @ResponseBody boolean add(@RequestBody User user){
+		service.add(user);
+		return true;
+	}
+	@RequestMapping(value="/update", method=RequestMethod.POST ,consumes=MediaType.APPLICATION_JSON)
+	public @ResponseBody boolean update(@RequestBody User user){
+		logger.info("------Update request received for user "+user.getName());
+		service.update(user);
+		return true;
+	}
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
+	public @ResponseBody boolean delete(@PathVariable(value="id", required=false) int id){
+		 service.delete(service.getById(id));
+		 return true;
 	}
 
 	/*	@RequestMapping(value="/list2/{id}", method=RequestMethod.GET )
@@ -55,10 +76,6 @@ public class UserRest {
 		qb.setQuestion("-"+qb.getQuestion());
 		qb.setTru(true);
 		return client.update(qb,request);
-	}
-	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
-	public @ResponseBody String delete(@PathVariable(value="id", required=false) int id){
-		return client.delete(id);
 	}
 */	
 

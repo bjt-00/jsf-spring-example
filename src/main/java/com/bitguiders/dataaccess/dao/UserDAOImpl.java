@@ -20,7 +20,9 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public void update(User user) {
-		usersList.remove(user);
+		//TODO this is a temp for demo purpose only
+		User tempUser = getById(user.getId());
+		usersList.remove(tempUser);
 		usersList.add(user);
 	}
 	@Override
